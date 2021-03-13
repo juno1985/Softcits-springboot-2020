@@ -14,5 +14,10 @@ public class MyCalculator {
 		//System.out.println("a - b = " + result);
 	}
 	
+	public double div(int a, int b) {
+		if(b == 0 ) throw new RuntimeException();
+		return (a * 1.0) / b;
+	}
+	
 
 }
