@@ -1,12 +1,24 @@
 package org.demo.junit.bean;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
 public class TestMyCalculator {
 	
-	MyCalculator myCalculator = new MyCalculator();
+	MyCalculator myCalculator;
+	
+	@BeforeEach
+	public void init() {
+		myCalculator = new MyCalculator();
+	}
+	
+	@AfterEach
+	public void destroy(){
+		System.out.println("Test case completed.");
+	}
 	
 	@Test
 	public void testAdd() {
