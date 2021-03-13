@@ -15,7 +15,7 @@ public class MyCalculator {
 	}
 	
 	public double div(int a, int b) {
-		if(b == 0 ) throw new RuntimeException();
+		if(b == 0 ) throw new RuntimeException("b cannot be 0");
 		return (a * 1.0) / b;
 	}
 	

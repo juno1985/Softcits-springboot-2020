@@ -3,6 +3,7 @@ package org.demo.junit.bean;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+
 public class TestMyCalculator {
 	
 	MyCalculator myCalculator = new MyCalculator();
@@ -29,7 +30,10 @@ public class TestMyCalculator {
 	@Test
 	public void testDiv2() {
 
-		Assertions.assertThrows(RuntimeException.class, () -> myCalculator.div(15, 0));
+		Exception exp = Assertions.assertThrows(RuntimeException.class, () -> myCalculator.div(15, 0));
+		
+		Assertions.assertEquals("b cannot be 0", exp.getMessage());
+		
 		//double result = myCalculator.div(15, 0);
 	}
 
