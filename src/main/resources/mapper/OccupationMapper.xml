@@ -11,4 +11,9 @@
   <select id="getFirstOccupation" resultType="org.softcits.cn.model.Occupation">
    select Name, Occupation from occupations limit 0,1
   </select>
+  
+  <!-- List<Occupation> getAllOccupations(); -->
+  <select id="getAllOccupations" resultType="org.softcits.cn.model.Occupation">
+  	SELECT NAME, Occupation FROM occupations
+  </select>
 </mapper>
