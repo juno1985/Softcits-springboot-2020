@@ -33,4 +33,20 @@
   <update id="updateOccupationByName">
   	UPDATE occupations SET Occupation=#{_occp, jdbcType=VARCHAR} WHERE NAME = #{_name, jdbcType=VARCHAR}
   </update>
+  
+  <!-- int insertOccupation(String name, String occp); -->
+  <insert id="insertOccupation">
+  	INSERT INTO occupations(NAME, Occupation) VALUES ( #{param1}, #{param2});
+  </insert>
+  
+  <!-- int deleteOccupation(Map<String, Object> map); -->
+  <delete id="deleteOccupation" parameterType="java.util.Map">
+  	DELETE FROM occupations WHERE NAME=#{name} AND Occupation = #{occp}
+  </delete>
+  
+  <!-- Occupation getByNameAndOccupation(Occupation occp); -->
+  <select id="getByNameAndOccupation" resultType="org.softcits.cn.model.Occupation"
+  	parameterType="org.softcits.cn.model.Occupation">
+  	select name, Occupation from occupations where Name=#{Name, jdbcType=VARCHAR} and Occupation=#{Occupation, jdbcType=VARCHAR}
+  	</select>
 </mapper>

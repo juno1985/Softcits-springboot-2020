@@ -1,6 +1,8 @@
 package org.softcits.cn.serivce;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -49,6 +51,31 @@ public class OccupationServiceTest {
 		int num = occupationMapper.updateOccupationByName("Julia", "Actor");
 		System.out.print("Affected Rows: " + num);
 		Assertions.assertEquals(1, num);
+	}
+	
+	@Test
+	public void insertOccupationTest() {
+		int num = occupationMapper.insertOccupation("Mark", "Actor");
+		Assertions.assertEquals(1, num);
+	}
+	
+	@Test
+	public void deleteOccupationDelete() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("name", "Mark");
+		map.put("occp", "Actor");
+		int num = occupationMapper.deleteOccupation(map);
+		System.out.println("Delete Rows: " + num);
+	}
+	
+	@Test
+	public void getByNameAndOccupation() {
+		Occupation occp = new Occupation();
+		occp.setName("Jenny");
+		occp.setOccupation("Doctor");
+		Occupation result = occupationMapper.getByNameAndOccupation(occp);
+		Assertions.assertEquals("Jenny", result.getName());
+		Assertions.assertEquals("Doctor", result.getOccupation());
 	}
 }
 
