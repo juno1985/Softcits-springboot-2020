@@ -16,4 +16,21 @@
   <select id="getAllOccupations" resultType="org.softcits.cn.model.Occupation">
   	SELECT NAME, Occupation FROM occupations
   </select>
+  
+  <!-- Occupation getOccupationByName(String name); -->
+  <select id="getOccupationByName" resultType="org.softcits.cn.model.Occupation"
+  	parameterType="java.lang.String">
+  	SELECT NAME, Occupation FROM occupations WHERE NAME = #{name, jdbcType=VARCHAR}
+  	</select>
+  	
+  <!--  List<Occupation> getOccupationByNamePrefix(String prefix); -->
+  <select id="getOccupationByNamePrefix" resultType="org.softcits.cn.model.Occupation"
+  	parameterType="java.lang.String">
+  	SELECT NAME, Occupation FROM occupations WHERE NAME LIKE #{prefix, jdbcType=VARCHAR}
+  </select>
+  
+  <!-- int updateOccupationByName(@Param(value="_name")String name, @Param(value="_occp")String occp); -->
+  <update id="updateOccupationByName">
+  	UPDATE occupations SET Occupation=#{_occp, jdbcType=VARCHAR} WHERE NAME = #{_name, jdbcType=VARCHAR}
+  </update>
 </mapper>
