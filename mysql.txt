@@ -1,0 +1,25 @@
+USE WEATHER;
+
+drop table if exists city;
+
+CREATE TABLE city(
+id INT AUTO_INCREMENT,
+city_name VARCHAR(20),
+city_id VARCHAR(20),
+PRIMARY KEY(id)
+);
+
+drop table if exists forecast;
+
+CREATE TABLE forecast(
+id INT AUTO_INCREMENT,
+`date` VARCHAR(20),
+high VARCHAR(20),
+fengli VARCHAR(20),
+low VARCHAR(20),
+fengxiang VARCHAR(20),
+`type` VARCHAR(20),
+cid INT NOT NULL,
+PRIMARY KEY (id),
+CONSTRAINT city_constraint FOREIGN KEY(cid) REFERENCES city (id)
+)
