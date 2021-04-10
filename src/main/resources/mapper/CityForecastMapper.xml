@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+  	namespace: mapper interface name
+  	id: fucntion name
+  	resultType: return type
+   -->
+<mapper namespace="org.softcits.cn.mapper.CityForecastMapper">
+
+<resultMap id="CityForecast" type="org.softcits.cn.model.CityForecast">
+	
+	<result column="c_name" property="city_name"></result>
+	<collection property="forcastList" ofType="org.softcits.cn.model.Forecast">
+		<id column="fs_id" property="id"></id>
+		<result column="fs_date" property="date"></result>
+		<result column="fs_high" property="high"></result>
+		<result column="fs_fengli" property="fengli"></result>
+		<result column="fs_low" property="low"></result>
+		<result column="fs_fengxiang" property="fengxiang"></result>
+		<result column="fs_type" property="type"></result>
+		<result column="fs_cid" property="cid"></result>
+	</collection>
+</resultMap>
+
+  <!-- CityForecast getForcastWithCityByCityId(@Param(value="cid")String cid); -->
+  <select id="getForcastWithCityByCityId" resultMap="CityForecast">
+  SELECT c.`city_name` c_name, 
+fs.`date` fs_date, fs.high fs_high, fs.fengli fs_fengli, 
+fs.low fs_low, fs.fengxiang fs_fengxiang, fs.`type` fs_type,
+fs.id fs_id, fs.cid fs_cid	
+FROM city c, forecast fs
+WHERE c.id = fs.cid AND c.city_id = #{cid};
+  </select>
+  
+ 
+</mapper>
