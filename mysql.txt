@@ -4,7 +4,7 @@ drop table if exists city;
 
 CREATE TABLE city(
 id INT AUTO_INCREMENT,
-city_name VARCHAR(20),
+city_name VARCHAR(20) UNIQUE,
 city_id VARCHAR(20),
 PRIMARY KEY(id)
 );
@@ -23,3 +23,60 @@ cid INT NOT NULL,
 PRIMARY KEY (id),
 CONSTRAINT city_constraint FOREIGN KEY(cid) REFERENCES city (id)
 )
+
+INSERT INTO city (id, city_name, city_id) VALUES(NULL, "沈阳", "101070101");
+INSERT INTO city (id, city_name, city_id) VALUES(NULL, "三亚", "101310201");
+INSERT INTO city (id, city_name, city_id) VALUES(NULL, "湘潭", "101250201");
+INSERT INTO city (id, city_name, city_id) VALUES(NULL, "广州", "101280101");
+INSERT INTO city (id, city_name, city_id) VALUES(NULL, "拉萨", "101140101");
+
+
+INSERT INTO forecast(id, DATE, high, fengli, low, fengxiang, TYPE, cid)
+	VALUES(NULL, 
+	    "9日星期五",
+             "高温 17℃",
+            "东风",
+            "低温 2℃",
+            "<![CDATA[2级]]>",
+            "多云",
+            1);
+            
+INSERT INTO forecast(id, DATE, high, fengli, low, fengxiang, TYPE, cid)
+	VALUES(NULL, 
+	    "10日星期六",
+             "高温 21℃",
+            "<![CDATA[3级]]>",
+            "低温 10℃",
+            "南风",
+            "晴",
+            1);
+
+INSERT INTO forecast(id, DATE, high, fengli, low, fengxiang, TYPE, cid)
+	VALUES(NULL, 
+	    "11日星期天",
+             "高温 22℃",
+            "<![CDATA[4级]]>",
+            "低温 9℃",
+            "南风",
+            "多云",
+            1);
+            
+INSERT INTO forecast(id, DATE, high, fengli, low, fengxiang, TYPE, cid)
+	VALUES(NULL, 
+	    "12日星期一",
+             "高温 13℃",
+            "<![CDATA[4级]]>",
+            "低温 1℃",
+            "北风",
+            "晴",
+            1);
+            
+INSERT INTO forecast(id, DATE, high, fengli, low, fengxiang, TYPE, cid)
+	VALUES(NULL, 
+	    "13日星期二",
+             "高温 11℃",
+            "<![CDATA[3级]]>",
+            "低温 -1℃",
+            "北风",
+            "晴",
+            1);
