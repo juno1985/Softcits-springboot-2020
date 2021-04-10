@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+  	namespace: mapper interface name
+  	id: fucntion name
+  	resultType: return type
+   -->
+<mapper namespace="org.softcits.cn.mapper.ForecastMapper">
+
+  <!-- List<Forecast> getForecastByCityId(@Param(value="cid")String cid); -->
+  <select id="getForecastByCityId" resultType="org.softcits.cn.model.Forecast">
+  SELECT id, DATE, high, fengli, low, fengxiang, TYPE, cid FROM forecast WHERE cid = #{cid};
+  </select>
+  
+ 
+</mapper>
