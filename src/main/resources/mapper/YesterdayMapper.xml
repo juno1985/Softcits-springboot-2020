@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+  	namespace: mapper interface name
+  	id: fucntion name
+  	resultType: return type
+   -->
+<mapper namespace="org.softcits.cn.mapper.YesterdayMapper">
+  <!-- Integer insert(@Param(value="yes")Yesterday yesterday); -->
+  <insert id="insert" parameterType="org.softcits.cn.model.Yesterday">
+  INSERT INTO yesterday(date, high,fx,low,fl, type, cid) VALUES (#{date},#{high},#{fx},#{low},#{fl},#{type},#{cid});
+  </insert>
+</mapper>
