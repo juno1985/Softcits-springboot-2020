@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+  	namespace: mapper interface name
+  	id: fucntion name
+  	resultType: return type
+   -->
+<mapper namespace="org.softcits.cn.mapper.CityNoticeMapper">
+
+<resultMap id="CityNotice" type="org.softcits.cn.model.CityNotice">
+	
+	<!-- private int id;
+	private String city_id;
+	private String city_name; -->
+	<id column="id" property="id"></id>
+	<result column="city_id" property="city_id"></result>
+	<result column="city_name" property="city_name"></result>
+	<!-- 1~1 -->
+	<result column="notice_id" property="notice.id"></result>
+	<result column="notice_ganmao" property="notice.ganmao"></result>
+	<result column="notice_wendu" property="notice.wendu"></result>
+	<result column="notice_cid" property="notice.cid"></result>
+
+</resultMap>
+
+<!-- CityNotice getCityNoticeByCityId(@Param(value="city_id") String city_id); -->
+
+  <select id="getCityNoticeByCityId" resultMap="CityNotice">
+SELECT city.id, city.city_id,city_name ,notice.id AS notice_id,
+notice.ganmao AS notice_ganmao, notice.wendu AS notice_wendu, notice.cid AS notice_cid
+FROM city, notice
+WHERE city.id = notice.cid AND city.city_id = #{city_id}
+  </select>
+  
+ 
+</mapper>
