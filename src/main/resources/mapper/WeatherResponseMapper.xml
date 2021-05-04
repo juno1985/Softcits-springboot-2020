@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.softcits.cn.mapper.WeatherResponseMapper">
+<resultMap id="Data" type="org.softcits.cn.pojo.Data">
+	
+	<result column="c_name" property="city"></result>
+	<result column="n_ganmao" property="ganmao"></result>
+	<result column="n_wendu" property="wendu"></result>
+	<!-- 1~1 -->
+	<result column="yes_date" property="yesterday.date"></result>
+	<result column="yes_high" property="yesterday.high"></result>
+	<result column="yes_fx" property="yesterday.fx"></result>
+	<result column="yes_low" property="yesterday.low"></result>
+	<result column="yes_fl" property="yesterday.fl"></result>
+	<result column="yes_type" property="yesterday.type"></result>
+	<!-- 1~N -->
+	<collection property="forecast" ofType="org.softcits.cn.pojo.ForecastPojo">
+		<result column="f_date" property="date"></result>
+		<result column="f_high" property="high"></result>
+		<result column="f_fengli" property="fengli"></result>
+		<result column="f_low" property="low"></result>
+		<result column="f_fengxiang" property="fengxiang"></result>
+		<result column="f_type" property="type"></result>
+	</collection>
+</resultMap>
+
+
+  <!-- Data getWeatherResponse(City city); -->
+  <select id="getWeatherResponse" parameterType="org.softcits.cn.model.City" resultMap="Data">
+  SELECT yes.`date` AS yes_date, yes.`high` AS yes_high, yes.`fx` AS yes_fx, 
+	yes.`low` AS yes_low, yes.`fl` AS yes_fl, yes.`type` AS yes_type,
+	c.`city_name` AS c_name,
+	f.`date` AS f_date, f.`high` AS f_high, f.`fengli` AS f_fengli,
+	f.`low` AS f_low, f.`fengxiang` AS f_fengxiang, f.`type` AS f_type,
+	n.`ganmao` AS n_ganmao, n.`wendu` AS n_wendu
+FROM yesterday yes, city c, forecast f, notice n
+WHERE c.`id` = yes.`cid` AND c.`id` = f.`cid` AND c.`id` = n.`cid` AND c.`city_id` = #{city_id};
+  </select>
+</mapper>

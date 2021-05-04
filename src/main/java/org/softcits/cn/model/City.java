@@ -4,7 +4,7 @@ public class City {
 	
 	private Integer id;
 	private String city_name;
-	private Integer city_id;
+	private String city_id;
 	public Integer getId() {
 		return id;
 	}
@@ -17,10 +17,10 @@ public class City {
 	public void setCity_name(String city_name) {
 		this.city_name = city_name;
 	}
-	public Integer getCity_id() {
+	public String getCity_id() {
 		return city_id;
 	}
-	public void setCity_id(Integer city_id) {
+	public void setCity_id(String city_id) {
 		this.city_id = city_id;
 	}
 	
