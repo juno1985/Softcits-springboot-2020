@@ -20,5 +20,11 @@ public class CityServiceTest {
 		Integer num = cityService.insertCity(cityPojo);
 		Assertions.assertEquals(1, num);
 	}
+	
+	@Test
+	public void insertCityBatch() {
+		int nums = cityService.insertCityBatch();
+		System.out.println("Records inserted: " + nums);
+	}
 
 }

@@ -1,6 +1,9 @@
 USE WEATHER;
 
-drop table if exists city;
+DROP TABLE IF EXISTS forecast;
+DROP TABLE IF EXISTS yesterday;
+DROP TABLE IF EXISTS notice;
+DROP TABLE IF EXISTS city;
 
 CREATE TABLE city(
 id INT AUTO_INCREMENT,
@@ -9,7 +12,6 @@ city_id VARCHAR(20),
 PRIMARY KEY(id)
 );
 
-drop table if exists forecast;
 
 CREATE TABLE forecast(
 id INT AUTO_INCREMENT,
@@ -22,67 +24,9 @@ fengxiang VARCHAR(20),
 cid INT NOT NULL,
 PRIMARY KEY (id),
 CONSTRAINT city_constraint FOREIGN KEY(cid) REFERENCES city (id)
-)
-
-INSERT INTO city (id, city_name, city_id) VALUES(NULL, "沈阳", "101070101");
-INSERT INTO city (id, city_name, city_id) VALUES(NULL, "三亚", "101310201");
-INSERT INTO city (id, city_name, city_id) VALUES(NULL, "湘潭", "101250201");
-INSERT INTO city (id, city_name, city_id) VALUES(NULL, "广州", "101280101");
-INSERT INTO city (id, city_name, city_id) VALUES(NULL, "拉萨", "101140101");
+);
 
 
-INSERT INTO forecast(id, DATE, high, fengli, low, fengxiang, TYPE, cid)
-	VALUES(NULL, 
-	    "9日星期五",
-             "高温 17℃",
-            "东风",
-            "低温 2℃",
-            "<![CDATA[2级]]>",
-            "多云",
-            1);
-            
-INSERT INTO forecast(id, DATE, high, fengli, low, fengxiang, TYPE, cid)
-	VALUES(NULL, 
-	    "10日星期六",
-             "高温 21℃",
-            "<![CDATA[3级]]>",
-            "低温 10℃",
-            "南风",
-            "晴",
-            1);
-
-INSERT INTO forecast(id, DATE, high, fengli, low, fengxiang, TYPE, cid)
-	VALUES(NULL, 
-	    "11日星期天",
-             "高温 22℃",
-            "<![CDATA[4级]]>",
-            "低温 9℃",
-            "南风",
-            "多云",
-            1);
-            
-INSERT INTO forecast(id, DATE, high, fengli, low, fengxiang, TYPE, cid)
-	VALUES(NULL, 
-	    "12日星期一",
-             "高温 13℃",
-            "<![CDATA[4级]]>",
-            "低温 1℃",
-            "北风",
-            "晴",
-            1);
-            
-INSERT INTO forecast(id, DATE, high, fengli, low, fengxiang, TYPE, cid)
-	VALUES(NULL, 
-	    "13日星期二",
-             "高温 11℃",
-            "<![CDATA[3级]]>",
-            "低温 -1℃",
-            "北风",
-            "晴",
-            1);
-
-            
-            
 CREATE TABLE yesterday(
 id INT NOT NULL AUTO_INCREMENT,
 `date` VARCHAR(20),
@@ -94,11 +38,7 @@ fl VARCHAR(20),
 cid INT,
 PRIMARY KEY (id),
 CONSTRAINT yesterday_city_constraint FOREIGN KEY(cid) REFERENCES city (id)
-)
-
-INSERT INTO yesterday (id, `date`, high, fx, low, fl, `type`, cid)
-	VALUES(NULL, "9日星期五", "高温 17℃", "东风", "低温 2℃", "<![CDATA[2级]]>", "多云", 1);
-	
+);
 
 	
 CREATE TABLE notice(
@@ -110,4 +50,4 @@ PRIMARY KEY (id),
 CONSTRAINT notice_city_constraint FOREIGN KEY(cid) REFERENCES city (id)
 );
 
-INSERT INTO notice(id, ganmao, wendu, cid) VALUES(NULL, "感冒易发期，外出请适当调整衣物，注意补充水分。", "12", 1);
+
