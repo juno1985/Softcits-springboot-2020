@@ -9,8 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/report")
+@Api(tags = "WeatherReportController Interface")
 public class WeatherReportController {
 	
 	@Autowired
@@ -20,6 +26,10 @@ public class WeatherReportController {
 	 * @param cityid
 	 * @return
 	 */
+	@ApiOperation("Get report json by city id")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "cityid", value = "national city id", required = true)
+	})
 	@GetMapping("/id/{cityid}")
 	public Response getWeatherResponseByCityId(@PathVariable(name="cityid")String cityid) {
 		City city = new City();
@@ -32,6 +42,10 @@ public class WeatherReportController {
 	 * @param cityid
 	 * @return
 	 */
+	@ApiOperation("Get report json by city name")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "cityname", value = "national city name", required = true)
+	})
 	@GetMapping("/name/{cityname}")
 	public Response getWeatherResponseByCityName(@PathVariable(name="cityname")String cityname) {
 		City city = new City();
