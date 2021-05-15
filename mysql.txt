@@ -7,8 +7,8 @@ DROP TABLE IF EXISTS city;
 
 CREATE TABLE city(
 id INT AUTO_INCREMENT,
-city_name VARCHAR(20) UNIQUE,
-city_id VARCHAR(20),
+city_name VARCHAR(20),
+city_id VARCHAR(20) UNIQUE,
 PRIMARY KEY(id)
 );
 
