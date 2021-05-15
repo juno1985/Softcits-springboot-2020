@@ -2,6 +2,7 @@ package org.softcits.cn.controller;
 
 import org.softcits.cn.model.City;
 import org.softcits.cn.pojo.Response;
+import org.softcits.cn.serivce.RemoteDataService;
 import org.softcits.cn.serivce.WeatherResponseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,10 @@ public class WeatherReportController {
 	
 	@Autowired
 	private WeatherResponseService weatherResponseService;
+	
+	@Autowired
+	private RemoteDataService remoteDataService;
+	
 	/**
 	 * http://localhost:8080/report/id/101070101
 	 * @param cityid
@@ -53,5 +58,7 @@ public class WeatherReportController {
 		Response response = weatherResponseService.getWeatherResponse(city);
 		return response;
 	}
+	
+	
 	
 }
