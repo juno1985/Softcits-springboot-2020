@@ -3,12 +3,19 @@ package org.softcits.cn.util;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 public class JSONObjectConverter {
+	
+	private static final Logger log = LoggerFactory.getLogger(JSONObjectConverter.class);
 
 	private JSONObjectConverter() {
 	}
@@ -34,8 +41,33 @@ public class JSONObjectConverter {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 		
+		return null;
+	}
+	/**
+	 * 
+	 * @param <T> object to convert to
+	 * @param jsonStr	json string
+	 * @param typeReference
+	 * @return
+	 */
+	public static<T> T generateObjectFromJSON(String jsonStr, TypeReference<T> typeReference) {
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		try {
+			return objectMapper.readValue(jsonStr, typeReference);
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e.getMessage());
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e.getMessage());
+		}
 		return null;
 	}
 	
