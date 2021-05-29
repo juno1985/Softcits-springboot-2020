@@ -45,14 +45,16 @@ public class RemoteDataServiceImpl implements RemoteDataService {
 	public void initSingleWeatherData(String cityId) {
 		
 		String url = CITY_KEY_URL + cityId;
-		
+		// get json from http://wthrcdn.etouch.cn/weather_min
 		String json = this.getRemoteData(url);
-		
+		// convert json to Response object
 		Response response = this.getResponseFromJSON(json);
+		// insert forecast data into mysql
 		List<ForecastPojo> forecastPojoList = response.getData().getForecast(); 
 		City city = cityMapper.getCityByCityId(cityId);
 		Integer cid = city.getId();
 		forecastService.insert(forecastPojoList, cid);
+		// insert yesterday data into mysql
 		
 	}
 	@Override
