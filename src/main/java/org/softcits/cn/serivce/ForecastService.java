@@ -6,5 +6,7 @@ import org.softcits.cn.model.Forecast;
 
 public interface ForecastService {
 
-	public List<Forecast> getForecastByCityId(String cid);
+	List<Forecast> getForecastByCityId(String cid);
+	
+	void insert(String cityId);
 }

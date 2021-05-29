@@ -22,12 +22,14 @@ public class RemoteDataServiceTest {
 	}
 	
 	@Test
-	public void getResponseFromJSONTest() {
+	public Response getResponseFromJSONTest() {
 		//get json from remote server
 		String jsonStr = this.getRemoteDataTest();
 		// convert json to Response object
 		Response response = remoteDataService.getResponseFromJSON(jsonStr);
 		
 		System.out.println(response);
+		
+		return response;
 	}
 }

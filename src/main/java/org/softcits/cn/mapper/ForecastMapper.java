@@ -9,5 +9,7 @@ import org.softcits.cn.model.Forecast;
 public interface ForecastMapper {
 	
 	List<Forecast> getForecastByCityId(@Param(value="cid")String cid);
+	
+	Integer insert(Forecast forecast);
 
 }

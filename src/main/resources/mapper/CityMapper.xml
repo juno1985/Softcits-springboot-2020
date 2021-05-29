@@ -10,5 +10,9 @@
  INSERT INTO city(city_name, city_id) VALUES (#{name}, #{id})
   </insert>
   
+  <!-- City getCityByCityId(String city_id); -->
+  <select id="getCityByCityId" resultType="org.softcits.cn.model.City">
+  	SELECT id, city_name, city_id FROM city WHERE city_id = #{cityId};
+  </select>
  
 </mapper>

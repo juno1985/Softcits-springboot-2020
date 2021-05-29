@@ -26,6 +26,13 @@ public class Forecast {
 	private String fengxiang;
 	private String type;
 	private Integer cid;
+	private Integer day_order;
+	public Integer getDay_order() {
+		return day_order;
+	}
+	public void setDay_order(Integer day_order) {
+		this.day_order = day_order;
+	}
 	public Integer getId() {
 		return id;
 	}

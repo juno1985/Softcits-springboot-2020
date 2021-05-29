@@ -14,5 +14,10 @@
   SELECT id, DATE, high, fengli, low, fengxiang, TYPE, cid FROM forecast WHERE cid = #{cid};
   </select>
   
+  <!-- Integer insert(Forecast forecast); -->
+  <select id="insert" parameterType="org.softcits.cn.model.Forecast">
+  	INSERT INTO forecast(id, DATE, high, fengli, low, fengxiang, TYPE, cid, day_order)
+  		values(null, #{date}, #{high}, #{fengli}, #{low}, #{fengxiang}, #{type}, #{cid}, #{day_order});
+  </select>
  
 </mapper>

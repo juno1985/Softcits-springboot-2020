@@ -19,4 +19,12 @@ public class ForecastServiceTest {
 			System.out.println(forecast.getId() + "->" + forecast.getDate() + "->" + forecast.getFengli() + "->" + forecast.getHigh() + "->" + forecast.getLow() + "->" + forecast.getType() + "->" + forecast.getFengxiang() + "->" + forecast.getCid());
 		}
 	}
+	
+	@Test
+	public void insert() {
+		
+		 String cityId = "101010100"; 
+		 forecastService.insert(cityId);
+		 
+	}
 }
