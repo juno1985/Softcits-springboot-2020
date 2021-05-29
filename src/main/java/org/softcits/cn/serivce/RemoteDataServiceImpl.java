@@ -65,33 +65,41 @@ public class RemoteDataServiceImpl implements RemoteDataService {
 		String json = this.getRemoteData(url);
 		// convert json to Response object
 		Response response = this.getResponseFromJSON(json);
-		Data data = response.getData();
-		// insert forecast data into mysql
-		List<ForecastPojo> forecastPojoList = data.getForecast(); 
-		City city = cityMapper.getCityByCityId(cityId);
-		Integer cid = city.getId();
-		forecastService.insert(forecastPojoList, cid);
-		// insert yesterday data into mysql
-		YesterdayPojo yesterdayPojo = data.getYesterday();
-		Yesterday yesterday = new Yesterday();
-		yesterday.setCid(cid);
-		yesterday.setDate(yesterdayPojo.getDate());
-		yesterday.setFl(yesterdayPojo.getFl());
-		yesterday.setFx(yesterdayPojo.getFx());
-		yesterday.setHigh(yesterdayPojo.getHigh());
-		yesterday.setLow(yesterdayPojo.getLow());
-		yesterday.setType(yesterdayPojo.getType());
-		yesterdayMapper.insert(yesterday);
-		// insert notice data into mysql
-		Notice notice = new Notice();
-		notice.setGanmao(data.getGanmao());
-		notice.setWendu(data.getWendu());
-		notice.setCid(cid);
-		cityNoticeMapper.insert(notice);
+		if(response.getDesc().equals("OK") && response.getStatus().equals("1000")) {
+			Data data = response.getData();
+			// insert forecast data into mysql
+			List<ForecastPojo> forecastPojoList = data.getForecast(); 
+			City city = cityMapper.getCityByCityId(cityId);
+			Integer cid = city.getId();
+			forecastService.insert(forecastPojoList, cid);
+			// insert yesterday data into mysql
+			YesterdayPojo yesterdayPojo = data.getYesterday();
+			Yesterday yesterday = new Yesterday();
+			yesterday.setCid(cid);
+			yesterday.setDate(yesterdayPojo.getDate());
+			yesterday.setFl(yesterdayPojo.getFl());
+			yesterday.setFx(yesterdayPojo.getFx());
+			yesterday.setHigh(yesterdayPojo.getHigh());
+			yesterday.setLow(yesterdayPojo.getLow());
+			yesterday.setType(yesterdayPojo.getType());
+			yesterdayMapper.insert(yesterday);
+			// insert notice data into mysql
+			Notice notice = new Notice();
+			notice.setGanmao(data.getGanmao());
+			notice.setWendu(data.getWendu());
+			notice.setCid(cid);
+			cityNoticeMapper.insert(notice);
+		}
+		
 	}
+	@Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRED)
 	@Override
 	public void initBatchWeatherData() {
-		// TODO Auto-generated method stub
+		List<City> cityList = cityMapper.getAllCities();
+		
+		for(City city : cityList) {
+			initSingleWeatherData(city.getCity_id());
+		}
 		
 	}
 

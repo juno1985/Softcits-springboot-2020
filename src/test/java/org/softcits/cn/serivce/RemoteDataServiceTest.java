@@ -37,4 +37,9 @@ public class RemoteDataServiceTest {
 	public void initSingleWeatherData() {
 		remoteDataService.initSingleWeatherData("101010100");
 	}
+	
+	@Test
+	public void initBatchWeatherData() {
+		remoteDataService.initBatchWeatherData();
+	}
 }
