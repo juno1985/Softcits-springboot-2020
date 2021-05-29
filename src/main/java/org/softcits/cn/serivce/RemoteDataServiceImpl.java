@@ -14,6 +14,7 @@ import org.softcits.cn.pojo.Response;
 import org.softcits.cn.pojo.YesterdayPojo;
 import org.softcits.cn.util.JSONObjectConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -25,7 +26,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 @Service
 public class RemoteDataServiceImpl implements RemoteDataService {
 
-	private static final String CITY_KEY_URL = "http://wthrcdn.etouch.cn/weather_mini?citykey=";
+	@Value(value="${url.weather.cityid}")
+	private String CITY_KEY_URL;
 	
 	@Autowired
 	private RestTemplate restTemplate;
