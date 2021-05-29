@@ -14,5 +14,10 @@
   <select id="getCityByCityId" resultType="org.softcits.cn.model.City">
   	SELECT id, city_name, city_id FROM city WHERE city_id = #{cityId};
   </select>
+  
+  <!-- List<City> getAllCities() -->
+  <select id="getAllCities" resultType="org.softcits.cn.model.City">
+  	SELECT id, city_name, city_id FROM city;
+  </select>
  
 </mapper>

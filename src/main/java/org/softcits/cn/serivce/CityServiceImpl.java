@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.softcits.cn.mapper.CityMapper;
+import org.softcits.cn.model.City;
 import org.softcits.cn.pojo.CityPojo;
 import org.softcits.cn.util.JSONObjectConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,12 @@ public class CityServiceImpl implements CityService {
 		} 
 		
 		return total - duplicated;
+	}
+
+	@Override
+	public List<City> getAllCities() {
+		
+		return cityMapper.getAllCities();
 	}
 
 }

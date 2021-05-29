@@ -1,4 +1,6 @@
 package org.softcits.cn.mapper;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.softcits.cn.model.City;
@@ -10,5 +12,7 @@ public interface CityMapper {
 	Integer insertCity(CityPojo cityPojo);
 	
 	City getCityByCityId(@Param(value="cityId")String city_id);
+	
+	List<City> getAllCities();
 
 }
