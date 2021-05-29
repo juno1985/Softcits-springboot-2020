@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+  	namespace: mapper interface name
+  	id: fucntion name
+  	resultType: return type
+   -->
+<mapper namespace="org.softcits.cn.mapper.WeatherDataAdminMapper">
+	<!-- void cleanForecast(); -->
+	<update id="cleanForecast">
+		TRUNCATE TABLE forecast;
+	</update>
+	<!-- void cleanYesterday(); -->
+	<update id="cleanYesterday">
+		TRUNCATE TABLE yesterday;
+	</update>
+	<!-- void cleanNotice(); -->
+ 	<update id="cleanNotice">
+ 		TRUNCATE TABLE notice;
+	</update>
+</mapper>

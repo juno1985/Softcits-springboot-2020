@@ -2,6 +2,7 @@ package org.softcits.cn.controller;
 
 import org.softcits.cn.pojo.AffectedNum;
 import org.softcits.cn.serivce.CityService;
+import org.softcits.cn.serivce.WeatherDataAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,8 @@ public class AdminController {
 	
 	@Autowired
 	private CityService cityService;
+	@Autowired
+	private WeatherDataAdmin weatherDataAdmin;
 
 	@ApiOperation("City date batch insert by json file")
 	@GetMapping("/addcities")
@@ -29,5 +32,12 @@ public class AdminController {
 		AffectedNum an = new AffectedNum(num, "Cities added successfully");
 		
 		return new ResponseEntity<AffectedNum>(an, HttpStatus.OK);
+	}
+	
+	@ApiOperation("Clean up all weather data including forecast/yesterday/notice")
+	@GetMapping("/clean")
+	public ResponseEntity<String> cleanWeatherData(){
+		weatherDataAdmin.cleanWeatherData();
+		return new ResponseEntity<String>("Clean Up Completed.", HttpStatus.OK);
 	}
 }
