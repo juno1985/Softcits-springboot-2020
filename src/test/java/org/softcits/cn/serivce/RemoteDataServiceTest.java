@@ -32,4 +32,9 @@ public class RemoteDataServiceTest {
 		
 		return response;
 	}
+	
+	@Test
+	public void initSingleWeatherData() {
+		remoteDataService.initSingleWeatherData("101010100");
+	}
 }

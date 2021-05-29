@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ForecastServiceImpl implements ForecastService {
 
-	private static final String CITY_KEY_URL = "http://wthrcdn.etouch.cn/weather_mini?citykey=";
 	
 	@Autowired
 	private ForecastMapper forecastMapper;
@@ -30,21 +29,13 @@ public class ForecastServiceImpl implements ForecastService {
 	}
 
 	@Override
-	public void insert(String cityId) {
-		
-		String url = CITY_KEY_URL + cityId;
-		
-		String json = remoteDataService.getRemoteData(url);
-		
-		Response response = remoteDataService.getResponseFromJSON(json);
-		
-		List<ForecastPojo> list =  response.getData().getForecast();
+	public void insert(List<ForecastPojo> list, Integer cid) {
 		
 		for(int i = 0; i < list.size(); i++) {
 			ForecastPojo forecastPojo = list.get(i);
 			Forecast forecast = new Forecast();
-			City city = cityMapper.getCityByCityId(cityId);
-			forecast.setCid(city.getId());
+	
+			forecast.setCid(cid);
 			forecast.setDate(forecastPojo.getDate());
 			forecast.setDay_order(i);
 			forecast.setFengli(forecastPojo.getFengxiang());

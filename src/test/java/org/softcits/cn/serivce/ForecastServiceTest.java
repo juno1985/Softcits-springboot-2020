@@ -20,11 +20,4 @@ public class ForecastServiceTest {
 		}
 	}
 	
-	@Test
-	public void insert() {
-		
-		 String cityId = "101010100"; 
-		 forecastService.insert(cityId);
-		 
-	}
 }
