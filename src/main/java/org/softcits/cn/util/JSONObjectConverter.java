@@ -1,17 +1,16 @@
 package org.softcits.cn.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class JSONObjectConverter {
 	
@@ -60,12 +59,10 @@ public class JSONObjectConverter {
 		try {
 			return objectMapper.readValue(jsonStr, typeReference);
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("JsonMappingException: converting JSON to Object");
 			log.error(e.getMessage());
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("JsonProcessingException: converting JSON to Object");
 			log.error(e.getMessage());
 		}
 		return null;

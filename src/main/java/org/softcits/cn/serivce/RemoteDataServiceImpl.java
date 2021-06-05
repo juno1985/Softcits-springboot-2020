@@ -1,6 +1,8 @@
 package org.softcits.cn.serivce;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.softcits.cn.mapper.*;
 import org.softcits.cn.model.City;
 import org.softcits.cn.model.Notice;
@@ -25,6 +27,7 @@ import java.util.List;
 @Service
 public class RemoteDataServiceImpl implements RemoteDataService {
 
+	private static final Logger log = LoggerFactory.getLogger(RemoteDataServiceImpl.class);
 	@Value(value="${url.weather.cityid}")
 	private String CITY_KEY_URL;
 	
@@ -54,7 +57,8 @@ public class RemoteDataServiceImpl implements RemoteDataService {
 				resp = respEntity.getBody();
 			}
 		} catch (RestClientException e) {
-			e.printStackTrace();
+			log.error("Error while getting remote data");
+			log.error(e.getMessage());
 		}
 
 		return resp;
@@ -107,6 +111,9 @@ public class RemoteDataServiceImpl implements RemoteDataService {
 		String url = CITY_KEY_URL + cityId;
 		// get json from http://wthrcdn.etouch.cn/weather_min
 		String json = this.getRemoteData(url);
+		if(json != null && json.isEmpty()){
+			return null;
+		}
 		// convert json to Response object
 		Response response = this.getResponseFromJSON(json);
 		List<Object> resultList = new ArrayList<Object>();

@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class QuartzConfig {
 
-private static final int INTERVAL = 2;
+private static final int INTERVAL = 60 * 60;
 	
 	//JobDetail
 	@Bean
