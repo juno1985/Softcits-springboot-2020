@@ -12,5 +12,24 @@
   <select id="insert" parameterType="org.softcits.cn.model.Notice">
   	insert into notice_tmp(id, ganmao, wendu, cid) values(null, #{ganmao}, #{wendu}, #{cid});
   </select>
- 
+ <!--void updateFromTmpTable();-->
+    <update id="updateFromTmpTable">
+        UPDATE
+        notice,
+        notice_tmp
+        SET
+        notice.ganmao =
+        CASE
+        WHEN notice.ganmao &lt;&gt; notice_tmp.ganmao
+        THEN notice_tmp.ganmao
+        ELSE notice.ganmao
+        END,
+        notice.wendu =
+        CASE
+        WHEN notice.wendu &lt;&gt; notice_tmp.wendu
+        THEN notice_tmp.wendu
+        ELSE notice.wendu
+        END
+        WHERE notice.cid = notice_tmp.cid
+    </update>
 </mapper>

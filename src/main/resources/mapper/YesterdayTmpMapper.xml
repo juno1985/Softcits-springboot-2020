@@ -12,4 +12,42 @@
   <insert id="insert" parameterType="org.softcits.cn.model.Yesterday">
   INSERT INTO yesterday_tmp(date, high,fx,low,fl, type, cid) VALUES (#{date},#{high},#{fx},#{low},#{fl},#{type},#{cid});
   </insert>
+  <!--updateFromTmpTable-->
+  <update id="updateFromTmpTable">
+    UPDATE
+    yesterday,
+    yesterday_tmp
+    SET
+    yesterday.date =
+    CASE
+    WHEN yesterday.date &lt;&gt; yesterday_tmp.date
+    THEN yesterday_tmp.date
+    END,
+    yesterday.fl =
+    CASE
+    WHEN yesterday.fl &lt;&gt; yesterday_tmp.fl
+    THEN yesterday_tmp.fl
+    END,
+    yesterday.high =
+    CASE
+    WHEN yesterday.high &lt;&gt; yesterday_tmp.high
+    THEN yesterday_tmp.high
+    END,
+    yesterday.low =
+    CASE
+    WHEN yesterday.low &lt;&gt; yesterday_tmp.low
+    THEN yesterday_tmp.low
+    END,
+    yesterday.fx =
+    CASE
+    WHEN yesterday.fx &lt;&gt; yesterday_tmp.fx
+    THEN yesterday_tmp.fx
+    END,
+    yesterday.type =
+    CASE
+    WHEN yesterday.type &lt;&gt; yesterday_tmp.type
+    THEN yesterday_tmp.type
+    END
+    WHERE yesterday.cid = yesterday_tmp.cid
+  </update>
 </mapper>

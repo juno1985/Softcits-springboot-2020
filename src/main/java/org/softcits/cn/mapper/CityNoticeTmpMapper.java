@@ -6,4 +6,5 @@ import org.softcits.cn.model.Notice;
 @Mapper
 public interface CityNoticeTmpMapper {
 	Integer insert(Notice notice);
+	void updateFromTmpTable();
 }

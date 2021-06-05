@@ -7,5 +7,5 @@ import org.softcits.cn.model.Forecast;
 public interface ForecastTmpMapper {
 	
 	Integer insert(Forecast forecast);
-
+	void updateFromTmpTable();
 }

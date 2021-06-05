@@ -1,6 +1,9 @@
 package org.softcits.cn.serivce;
 
 import org.junit.jupiter.api.Test;
+import org.softcits.cn.mapper.CityNoticeTmpMapper;
+import org.softcits.cn.mapper.ForecastTmpMapper;
+import org.softcits.cn.mapper.YesterdayTmpMapper;
 import org.softcits.cn.pojo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +13,12 @@ public class RemoteDataServiceTest {
 
 	@Autowired
 	private RemoteDataService remoteDataService;
+	@Autowired
+	private YesterdayTmpMapper yesterdayTmpMapper;
+	@Autowired
+	private CityNoticeTmpMapper cityNoticeTmpMapper;
+	@Autowired
+	private ForecastTmpMapper forecastTmpMapper;
 	
 	final String prefix_url = "http://wthrcdn.etouch.cn/weather_mini?citykey=";
 	
@@ -46,5 +55,13 @@ public class RemoteDataServiceTest {
 	@Test
 	public void initBatchWeatherDataTmpTest(){
 		remoteDataService.initBatchWeatherDataTmp();
+	}
+
+	@Test
+	public void synchronizeWeatherDataFromTmpTable(){
+		// update main tables from tmp tables
+		yesterdayTmpMapper.updateFromTmpTable();
+		cityNoticeTmpMapper.updateFromTmpTable();
+		forecastTmpMapper.updateFromTmpTable();
 	}
 }

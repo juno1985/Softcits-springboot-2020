@@ -9,4 +9,5 @@ public interface CityNoticeMapper {
 
 	CityNotice getCityNoticeByCityId(@Param(value="city_id") String city_id);
 	Integer insert(Notice notice);
+
 }

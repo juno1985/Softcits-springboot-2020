@@ -7,4 +7,5 @@ import org.softcits.cn.model.Yesterday;
 public interface YesterdayTmpMapper {
 
 	Integer insert(Yesterday yesterday);
+	void updateFromTmpTable();
 }
