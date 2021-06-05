@@ -34,12 +34,17 @@ public class RemoteDataServiceTest {
 	}
 	
 	@Test
-	public void initSingleWeatherData() {
+	public void initSingleWeatherDataTest() {
 		remoteDataService.initSingleWeatherData("101010100");
 	}
 	
 	@Test
-	public void initBatchWeatherData() {
+	public void initBatchWeatherDataTest() {
 		remoteDataService.initBatchWeatherData();
+	}
+
+	@Test
+	public void initBatchWeatherDataTmpTest(){
+		remoteDataService.initBatchWeatherDataTmp();
 	}
 }

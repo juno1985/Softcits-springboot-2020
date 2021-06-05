@@ -1,9 +1,7 @@
 package org.softcits.cn.serivce;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import org.softcits.cn.mapper.CityMapper;
-import org.softcits.cn.mapper.CityNoticeMapper;
-import org.softcits.cn.mapper.YesterdayMapper;
+import org.softcits.cn.mapper.*;
 import org.softcits.cn.model.City;
 import org.softcits.cn.model.Notice;
 import org.softcits.cn.model.Yesterday;
@@ -19,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -38,16 +37,26 @@ public class RemoteDataServiceImpl implements RemoteDataService {
 	@Autowired
 	private YesterdayMapper yesterdayMapper;
 	@Autowired
-	private CityNoticeMapper cityNoticeMapper; 
+	private CityNoticeMapper cityNoticeMapper;
+	@Autowired
+	private YesterdayTmpMapper yesterdayTmpMapper;
+	@Autowired
+	private CityNoticeTmpMapper cityNoticeTmpMapper;
+
+
 	@Override
 	public String getRemoteData(String url) {
-		
-		ResponseEntity<String> respEntity = restTemplate.getForEntity(url, String.class);
+
 		String resp = null;
-		if (respEntity.getStatusCodeValue() == 200) {
-			resp = respEntity.getBody();
+		try {
+			ResponseEntity<String> respEntity = restTemplate.getForEntity(url, String.class);
+			if (respEntity.getStatusCodeValue() == 200) {
+				resp = respEntity.getBody();
+			}
+		} catch (RestClientException e) {
+			e.printStackTrace();
 		}
-		
+
 		return resp;
 	}
 	@Override
@@ -72,7 +81,7 @@ public class RemoteDataServiceImpl implements RemoteDataService {
 		Integer cid = getCityIdByNationalCityId(cityId);
 		for(Object obj : inputList){
 			if(obj instanceof java.util.ArrayList){
-				forecastService.insert((ArrayList)obj, cid);
+				forecastService.insert((ArrayList)obj, cid, false);
 			}
 			else if(obj instanceof Yesterday){
 				yesterdayMapper.insert((Yesterday)obj);
@@ -135,4 +144,32 @@ public class RemoteDataServiceImpl implements RemoteDataService {
 		return cid;
 	}
 
+	public void initSingleWeatherDataTmp(String cityId) {
+
+		List<Object> inputList = getRemoteJsonAndConvertToObjList(cityId);
+		if(inputList.isEmpty()){
+			return;
+		}
+		Integer cid = getCityIdByNationalCityId(cityId);
+		for(Object obj : inputList){
+			if(obj instanceof java.util.ArrayList){
+				forecastService.insert((ArrayList)obj, cid, true);
+			}
+			else if(obj instanceof Yesterday){
+				yesterdayTmpMapper.insert((Yesterday)obj);
+			}
+			else if(obj instanceof Notice){
+				cityNoticeTmpMapper.insert((Notice) obj);
+			}
+		}
+
+	}
+
+	public void initBatchWeatherDataTmp(){
+		List<City> cityList = cityMapper.getAllCities();
+
+		for(City city : cityList) {
+			initSingleWeatherDataTmp(city.getCity_id());
+		}
+	}
 }

@@ -18,4 +18,10 @@ public class WeatherDataAdminImpl implements WeatherDataAdmin {
 
 	}
 
+	@Override
+	public void cleanWeatherDataTmp() {
+		weatherDataAdminMapper.cleanForecastTmp();
+		weatherDataAdminMapper.cleanNoticeTmp();
+		weatherDataAdminMapper.cleanYesterdayTmp();
+	}
 }

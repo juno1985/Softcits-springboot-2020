@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+  	namespace: mapper interface name
+  	id: fucntion name
+  	resultType: return type
+   -->
+<mapper namespace="org.softcits.cn.mapper.ForecastTmpMapper">
+
+  <!-- Integer insert(Forecast forecast); -->
+  <select id="insert" parameterType="org.softcits.cn.model.Forecast">
+  	INSERT INTO forecast_tmp(id, DATE, high, fengli, low, fengxiang, TYPE, cid, day_order)
+  		values(null, #{date}, #{high}, #{fengli}, #{low}, #{fengxiang}, #{type}, #{cid}, #{day_order});
+  </select>
+ 
+</mapper>

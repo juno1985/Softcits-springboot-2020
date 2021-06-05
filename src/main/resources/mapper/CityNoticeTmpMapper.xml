@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+  	namespace: mapper interface name
+  	id: fucntion name
+  	resultType: return type
+   -->
+<mapper namespace="org.softcits.cn.mapper.CityNoticeTmpMapper">
+
+  <select id="insert" parameterType="org.softcits.cn.model.Notice">
+  	insert into notice_tmp(id, ganmao, wendu, cid) values(null, #{ganmao}, #{wendu}, #{cid});
+  </select>
+ 
+</mapper>

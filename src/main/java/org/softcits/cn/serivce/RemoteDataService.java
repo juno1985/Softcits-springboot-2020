@@ -11,4 +11,6 @@ public interface RemoteDataService {
 	void initBatchWeatherData();
 	//initialize weather date for a single city
 	void initSingleWeatherData(String cityId);
+
+	void initBatchWeatherDataTmp();
 }

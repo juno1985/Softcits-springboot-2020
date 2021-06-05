@@ -20,4 +20,17 @@
  	<update id="cleanNotice">
  		TRUNCATE TABLE notice;
 	</update>
+
+	<!-- void cleanForecast(); -->
+	<update id="cleanForecastTmp">
+		TRUNCATE TABLE forecast_tmp;
+	</update>
+	<!-- void cleanYesterday(); -->
+	<update id="cleanYesterdayTmp">
+		TRUNCATE TABLE yesterday_tmp;
+	</update>
+	<!-- void cleanNotice(); -->
+	<update id="cleanNoticeTmp">
+ 		TRUNCATE TABLE notice_tmp;
+	</update>
 </mapper>
