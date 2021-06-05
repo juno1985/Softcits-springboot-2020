@@ -1,7 +1,6 @@
 package org.softcits.cn.serivce;
 
-import java.util.List;
-
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.softcits.cn.mapper.CityMapper;
 import org.softcits.cn.mapper.CityNoticeMapper;
 import org.softcits.cn.mapper.YesterdayMapper;
@@ -22,7 +21,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import java.util.ArrayList;
+import java.util.List;
 @Service
 public class RemoteDataServiceImpl implements RemoteDataService {
 
@@ -56,41 +56,32 @@ public class RemoteDataServiceImpl implements RemoteDataService {
 		};
 		return JSONObjectConverter.generateObjectFromJSON(jsonStr, typeReference);
 	}
+
+	/**
+	 *
+	 * @param cityId - national city id
+	 */
 	@Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRED)
 	@Override
 	public void initSingleWeatherData(String cityId) {
-		
-		String url = CITY_KEY_URL + cityId;
-		// get json from http://wthrcdn.etouch.cn/weather_min
-		String json = this.getRemoteData(url);
-		// convert json to Response object
-		Response response = this.getResponseFromJSON(json);
-		if(response.getDesc().equals("OK") && response.getStatus().equals("1000")) {
-			Data data = response.getData();
-			// insert forecast data into mysql
-			List<ForecastPojo> forecastPojoList = data.getForecast(); 
-			City city = cityMapper.getCityByCityId(cityId);
-			Integer cid = city.getId();
-			forecastService.insert(forecastPojoList, cid);
-			// insert yesterday data into mysql
-			YesterdayPojo yesterdayPojo = data.getYesterday();
-			Yesterday yesterday = new Yesterday();
-			yesterday.setCid(cid);
-			yesterday.setDate(yesterdayPojo.getDate());
-			yesterday.setFl(yesterdayPojo.getFl());
-			yesterday.setFx(yesterdayPojo.getFx());
-			yesterday.setHigh(yesterdayPojo.getHigh());
-			yesterday.setLow(yesterdayPojo.getLow());
-			yesterday.setType(yesterdayPojo.getType());
-			yesterdayMapper.insert(yesterday);
-			// insert notice data into mysql
-			Notice notice = new Notice();
-			notice.setGanmao(data.getGanmao());
-			notice.setWendu(data.getWendu());
-			notice.setCid(cid);
-			cityNoticeMapper.insert(notice);
+
+		List<Object> inputList = getRemoteJsonAndConvertToObjList(cityId);
+		if(inputList.isEmpty()){
+			return;
 		}
-		
+		Integer cid = getCityIdByNationalCityId(cityId);
+		for(Object obj : inputList){
+			if(obj instanceof java.util.ArrayList){
+				forecastService.insert((ArrayList)obj, cid);
+			}
+			else if(obj instanceof Yesterday){
+				yesterdayMapper.insert((Yesterday)obj);
+			}
+			else if(obj instanceof Notice){
+				cityNoticeMapper.insert((Notice) obj);
+			}
+		}
+
 	}
 	@Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRED)
 	@Override
@@ -101,6 +92,47 @@ public class RemoteDataServiceImpl implements RemoteDataService {
 			initSingleWeatherData(city.getCity_id());
 		}
 		
+	}
+
+	private List<Object> getRemoteJsonAndConvertToObjList(String cityId){
+		String url = CITY_KEY_URL + cityId;
+		// get json from http://wthrcdn.etouch.cn/weather_min
+		String json = this.getRemoteData(url);
+		// convert json to Response object
+		Response response = this.getResponseFromJSON(json);
+		List<Object> resultList = new ArrayList<Object>();
+		if(response.getDesc().equals("OK") && response.getStatus().equals("1000")) {
+			Integer cid = getCityIdByNationalCityId(cityId);
+			Data data = response.getData();
+			// add forecast list to result list
+			List<ForecastPojo> forecastPojoList = data.getForecast();
+			resultList.add(forecastPojoList);
+			// add yesterday to result list
+			YesterdayPojo yesterdayPojo = data.getYesterday();
+			Yesterday yesterday = new Yesterday();
+			yesterday.setCid(cid);
+			yesterday.setDate(yesterdayPojo.getDate());
+			yesterday.setFl(yesterdayPojo.getFl());
+			yesterday.setFx(yesterdayPojo.getFx());
+			yesterday.setHigh(yesterdayPojo.getHigh());
+			yesterday.setLow(yesterdayPojo.getLow());
+			yesterday.setType(yesterdayPojo.getType());
+			resultList.add(yesterday);
+			// insert notice data into mysql
+			Notice notice = new Notice();
+			notice.setGanmao(data.getGanmao());
+			notice.setWendu(data.getWendu());
+			notice.setCid(cid);
+			resultList.add(notice);
+		}
+		return resultList;
+	}
+
+	private Integer getCityIdByNationalCityId(String cityId){
+		// retrieve city cid - primary key in mysql
+		City city = cityMapper.getCityByCityId(cityId);
+		Integer cid = city.getId();
+		return cid;
 	}
 
 }

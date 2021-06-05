@@ -51,4 +51,41 @@ PRIMARY KEY (id),
 CONSTRAINT notice_city_constraint FOREIGN KEY(cid) REFERENCES city (id)
 );
 
+CREATE TABLE forecast_tmp(
+id INT AUTO_INCREMENT,
+`date` VARCHAR(20),
+high VARCHAR(20),
+fengli VARCHAR(20),
+low VARCHAR(20),
+fengxiang VARCHAR(20),
+`type` VARCHAR(20),
+cid INT NOT NULL,
+day_order INT NOT NULL,
+PRIMARY KEY (id),
+CONSTRAINT city_tmp_constraint FOREIGN KEY(cid) REFERENCES city (id)
+);
+
+CREATE TABLE yesterday_tmp(
+id INT NOT NULL AUTO_INCREMENT,
+`date` VARCHAR(20),
+high VARCHAR(20),
+fx VARCHAR(20),
+low VARCHAR(20),
+fl VARCHAR(20),
+`type` VARCHAR(20),
+cid INT,
+PRIMARY KEY (id),
+CONSTRAINT yesterday_city_tmp_constraint FOREIGN KEY(cid) REFERENCES city (id)
+);
+
+
+CREATE TABLE notice_tmp(
+id INT NOT NULL AUTO_INCREMENT,
+ganmao VARCHAR(100),
+wendu VARCHAR(10),
+cid INT,
+PRIMARY KEY (id),
+CONSTRAINT notice_city_tmp_constraint FOREIGN KEY(cid) REFERENCES city (id)
+);
+
 
