@@ -111,7 +111,7 @@ public class RemoteDataServiceImpl implements RemoteDataService {
 		String url = CITY_KEY_URL + cityId;
 		// get json from http://wthrcdn.etouch.cn/weather_min
 		String json = this.getRemoteData(url);
-		if(json != null && json.isEmpty()){
+		if(json == null && json.isEmpty()){
 			return null;
 		}
 		// convert json to Response object

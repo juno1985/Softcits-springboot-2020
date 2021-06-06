@@ -53,9 +53,9 @@ public class JSONObjectConverter {
 	 * @return
 	 */
 	public static<T> T generateObjectFromJSON(String jsonStr, TypeReference<T> typeReference) {
-		
+
 		ObjectMapper objectMapper = new ObjectMapper();
-		
+
 		try {
 			return objectMapper.readValue(jsonStr, typeReference);
 		} catch (JsonMappingException e) {
@@ -64,9 +64,10 @@ public class JSONObjectConverter {
 		} catch (JsonProcessingException e) {
 			log.error("JsonProcessingException: converting JSON to Object");
 			log.error(e.getMessage());
+		} catch (Exception e) {
+			log.error("Exception: converting JSON to Object");
+			log.error(e.getMessage());
 		}
 		return null;
 	}
-	
-
 }
