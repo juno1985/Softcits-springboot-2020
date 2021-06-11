@@ -27,7 +27,7 @@ public class SyncWeatherDataImpl implements SyncWeatherData{
     public void synchronizeWeatherData() {
         logger.info("Start clean temp tables ...");
         // clean tmp tables
-        weatherDataAdmin.cleanWeatherData();
+        weatherDataAdmin.cleanWeatherDataTmp();
         logger.info("Start insert into temp tables ...");
         // insert latest data from national center into tmp tables
         remoteDataService.initBatchWeatherDataTmp();
