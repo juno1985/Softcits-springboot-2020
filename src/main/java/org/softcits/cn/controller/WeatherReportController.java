@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/report")
@@ -58,7 +59,11 @@ public class WeatherReportController {
 		Response response = weatherResponseService.getWeatherResponse(city);
 		return response;
 	}
-	
-	
+
+	@GetMapping("/main")
+	public ModelAndView redirectMainPage(){
+		ModelAndView modelAndView = new ModelAndView("/page/main.html");
+		return modelAndView;
+	}
 	
 }

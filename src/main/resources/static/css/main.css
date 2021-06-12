@@ -1,0 +1,10 @@
+.report_container{
+}
+.report_container .report_notification{
+    height: 20px;
+}
+.report_container .report_wrapper_blocker{
+    display: inline-block;
+    width: 20%;
+    height: 100%;
+}
