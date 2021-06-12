@@ -70,4 +70,9 @@ public class JSONObjectConverter {
 		}
 		return null;
 	}
+
+	public static String generateJSONFromObject(Object obj) throws JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		return objectMapper.writeValueAsString(obj);
+	}
 }
