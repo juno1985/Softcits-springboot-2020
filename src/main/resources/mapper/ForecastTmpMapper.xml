@@ -30,26 +30,31 @@
         CASE
         WHEN forecast.fengli &lt;&gt; forecast_tmp.fengli
         THEN forecast_tmp.fengli
+        ELSE forecast.fengli
         END,
         forecast.fengxiang =
         CASE
         WHEN forecast.fengxiang &lt;&gt; forecast_tmp.fengxiang
         THEN forecast_tmp.fengxiang
+        ELSE forecast.fengxiang
         END,
         forecast.high =
         CASE
         WHEN forecast.high &lt;&gt; forecast_tmp.high
         THEN forecast_tmp.high
+        ELSE forecast.high
         END,
         forecast.low =
         CASE
         WHEN forecast.low &lt;&gt; forecast_tmp.low
         THEN forecast_tmp.low
+        ELSE forecast.low
         END,
         forecast.type =
         CASE
         WHEN forecast.type &lt;&gt; forecast_tmp.type
         THEN forecast_tmp.type
+        ELSE forecast.type
         END
         WHERE forecast.cid = forecast_tmp.cid
         AND forecast.day_order = forecast_tmp.day_order

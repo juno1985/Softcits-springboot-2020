@@ -22,31 +22,37 @@
     CASE
     WHEN yesterday.date &lt;&gt; yesterday_tmp.date
     THEN yesterday_tmp.date
+    ELSE yesterday.date
     END,
     yesterday.fl =
     CASE
     WHEN yesterday.fl &lt;&gt; yesterday_tmp.fl
     THEN yesterday_tmp.fl
+    ELSE yesterday.fl
     END,
     yesterday.high =
     CASE
     WHEN yesterday.high &lt;&gt; yesterday_tmp.high
     THEN yesterday_tmp.high
+    ELSE yesterday.high
     END,
     yesterday.low =
     CASE
     WHEN yesterday.low &lt;&gt; yesterday_tmp.low
     THEN yesterday_tmp.low
+    ELSE yesterday.low
     END,
     yesterday.fx =
     CASE
     WHEN yesterday.fx &lt;&gt; yesterday_tmp.fx
     THEN yesterday_tmp.fx
+    ELSE yesterday.fx
     END,
     yesterday.type =
     CASE
     WHEN yesterday.type &lt;&gt; yesterday_tmp.type
     THEN yesterday_tmp.type
+    ELSE yesterday.type
     END
     WHERE yesterday.cid = yesterday_tmp.cid
   </update>
