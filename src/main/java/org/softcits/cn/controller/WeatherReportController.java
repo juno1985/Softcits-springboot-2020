@@ -2,9 +2,12 @@ package org.softcits.cn.controller;
 
 import org.softcits.cn.model.City;
 import org.softcits.cn.pojo.Response;
+import org.softcits.cn.serivce.CityService;
 import org.softcits.cn.serivce.RemoteDataService;
 import org.softcits.cn.serivce.WeatherResponseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,8 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/report")
 @Api(tags = "WeatherReportController Interface")
@@ -26,6 +31,9 @@ public class WeatherReportController {
 	
 	@Autowired
 	private RemoteDataService remoteDataService;
+
+	@Autowired
+	private CityService cityService;
 	
 	/**
 	 * http://localhost:8080/report/id/101070101
@@ -64,6 +72,13 @@ public class WeatherReportController {
 	public ModelAndView redirectMainPage(){
 		ModelAndView modelAndView = new ModelAndView("/page/main.html");
 		return modelAndView;
+	}
+
+	@ApiOperation("Get all cities")
+	@GetMapping("/get/cities")
+	public ResponseEntity<List<City>> getAllCities(){
+		List<City> list = cityService.getAllCities();
+		return new ResponseEntity<List<City>>(list, HttpStatus.OK);
 	}
 	
 }

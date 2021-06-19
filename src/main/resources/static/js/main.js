@@ -1,10 +1,13 @@
 var basic_url = 'http://localhost:8080/report/id/';
+var cities_url = 'http://localhost:8080/report/get/cities';
+var CITY_LIST = [];
+//页面加载执行
 $(function () {
 
     var default_cid = '101010100';
     var full_url = basic_url + default_cid;
     displayWeatherReport(full_url);
-
+    initCityList();
 });
 
 function displayWeatherReport(full_url) {
@@ -78,4 +81,26 @@ function replaceBackground(weather_type, html_dom) {
     } else {
         html_dom.css('background', 'url(../img/sunny.gif) no-repeat').css('background-size', '100%');
     }
+}
+function ambiguousSearch(){
+
+}
+function initCityList(){
+
+    $.ajax(
+        {
+            url : cities_url,
+            method : 'get',
+            dataType: 'json',
+            success: function (arr_city) {
+                var cityList_innerHtml = '';
+                $.each(arr_city, function(index, element){
+                    cityList_innerHtml += '<div id="' + element.id +'" city_id="' + element.city_id +'">'
+                                + element.city_name + '</div>';
+                });
+
+                $('#cityList').html(cityList_innerHtml);
+            }
+        }
+    );
 }
