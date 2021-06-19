@@ -2,6 +2,7 @@
 }
 .report_container .report_wrapper{
     width: 60%;
+    padding-left: 50px;
 }
 .report_container .report_notification{
     height: 20px;
@@ -10,4 +11,7 @@
     display: inline-block;
     width: 19%;
     height: 100%;
+}
+.report_wrapper .report_wrapper_blocker .report_wrapper_blocker_link p{
+    color: darkorange;
 }

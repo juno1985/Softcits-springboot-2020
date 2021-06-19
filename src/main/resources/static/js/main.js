@@ -1,7 +1,7 @@
 var basic_url = 'http://localhost:8080/report/id/';
 $(function () {
 
-    var default_cid = '101290201';
+    var default_cid = '101010100';
     var full_url = basic_url + default_cid;
     displayWeatherReport(full_url);
 
@@ -15,10 +15,10 @@ function displayWeatherReport(full_url){
             datatype: 'json',
             success : function(response){
                 if(response.status == 200){
-                    console.log(response);
+                    // console.log(response);
                     // obtain 'a.report_wrapper_blocker_link'
                     var arr_a_forecast = $('.report_wrapper_blocker .report_wrapper_blocker_link');
-
+                    // 填充每一天天气信息
                     $.each(arr_a_forecast, function(index, element){
                         var innerHtml = '';
                         innerHtml += '<p>'+ response.data.forecast[index].date+'</p>' +
@@ -29,12 +29,37 @@ function displayWeatherReport(full_url){
                             '<p>'+ response.data.forecast[index].type+'</p>' ;
                         // 填充a标签
                         $(element).html(innerHtml);
+                        // 添加天气属性
+                        $(element).attr('data-weather-type', response.data.forecast[index].type);
+                        // 添加鼠标悬浮事件
+                        $(element).hover(
+                            function(){
+                                replaceBackground($(this).attr('data-weather-type'), $('#report_wrapper'));
+                            },function(){
 
+                            }
+                        );
                     });
+                    // 设置背景图片默认用第一天天气
+                    replaceBackground($(arr_a_forecast).eq(0).attr('data-weather-type'), $('#report_wrapper'));
                 }
                 else{
                     alert("Failed getting data from server.");
                 }
             }
         });
+}
+
+function replaceBackground(weather_type, html_dom){
+
+    if(weather_type.indexOf("雷") != -1){
+        html_dom.css('background', 'url(../img/thunder.gif) no-repeat').css('background-size','100%');
+
+    }else if(weather_type.indexOf("雾") != -1 || weather_type.indexOf("阴") != -1){
+        html_dom.css('background', 'url(../img/cloudy.gif) no-repeat').css('background-size','100%');
+    }else if(weather_type.indexOf("雨") != -1){
+        html_dom.css('background', 'url(../img/rainy.gif) no-repeat').css('background-size','100%');
+    }else{
+        html_dom.css('background', 'url(../img/sunny.gif) no-repeat').css('background-size','100%');
+    }
 }
