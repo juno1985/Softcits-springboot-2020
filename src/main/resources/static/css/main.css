@@ -5,7 +5,8 @@
     padding-left: 50px;
 }
 .report_container .report_notification{
-    height: 20px;
+    height: 25px;
+    overflow: hidden;
 }
 .report_container .report_wrapper_blocker{
     display: inline-block;
