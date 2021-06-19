@@ -82,8 +82,29 @@ function replaceBackground(weather_type, html_dom) {
         html_dom.css('background', 'url(../img/sunny.gif) no-repeat').css('background-size', '100%');
     }
 }
-function ambiguousSearch(){
+function ambiguousSearch(obj){
 
+    $(this).keyup(function(event){
+        // 空格键
+        if(event.keyCode == 32){
+            //去掉空格
+            var input_value = $('#cityInput').val().replace(' ','');
+
+            // console.log(input_value);
+            //从列表匹配input中输入的汉字
+            $.each($('#cityList').find('div'), function (index, element){
+                var div_value = element.innerHTML;
+                // console.log(div_value);
+                if(div_value.indexOf(input_value) != -1){
+                    element.style.display = 'block';
+                }
+                else{
+                    element.style.display = 'none';
+                }
+            } );
+        }
+
+    });
 }
 function initCityList(){
 
@@ -100,6 +121,13 @@ function initCityList(){
                 });
 
                 $('#cityList').html(cityList_innerHtml);
+                //鼠标经过高亮
+                $.each($('#cityList').find('div'), function(index, element){
+                    $(element).mouseenter(function(){
+                        $(this).css('background', '#eee');
+                        $(this).siblings().css('background', '');
+                    });
+                });
             }
         }
     );
