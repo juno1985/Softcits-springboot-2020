@@ -111,14 +111,14 @@ function ambiguousSearch(obj) {
         else if (event.keyCode == 38) {
             if (cursor > 0) {
                 cursor--;
-                console.log(cursor);
+              //  console.log(cursor);
             }
         }
         // down 键
         else if (event.keyCode == 40) {
             if (cursor < $('#cityList').find('div').size() - 1) {
                 cursor++;
-                console.log(cursor);
+               // console.log(cursor);
             }
         }
         // enter 键
@@ -130,9 +130,9 @@ function ambiguousSearch(obj) {
             if (index == cursor) {
                 $(element).css('background', '#eee');
                 //调节滚动条偏移
-                //$('#cityList').scrollTop(element.offsetTop);
+                $('#cityList').scrollTop(element.offsetTop);
                 //console.log($(element).scrollTop());
-                // console.log(element.offsetTop);
+                console.log(element.offsetTop);
             } else {
                 $(element).css('background', '');
             }
