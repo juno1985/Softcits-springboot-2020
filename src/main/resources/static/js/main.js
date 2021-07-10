@@ -27,7 +27,7 @@ function displayWeatherReport(full_url) {
 
                     setInterval(function () {
                         $('#report_notification').find('ul:first').animate(
-                            {marginTop: '-25px'}, 500,
+                            {marginTop: '-25px'}, 2000,
                                function(){
                                    $(this).css({marginTop: '0px'}).find('li:first').appendTo(this);
                                }
@@ -121,12 +121,24 @@ function initCityList(){
                 });
 
                 $('#cityList').html(cityList_innerHtml);
-                //鼠标经过高亮
+
                 $.each($('#cityList').find('div'), function(index, element){
+                    //鼠标经过高亮
                     $(element).mouseenter(function(){
                         $(this).css('background', '#eee');
                         $(this).siblings().css('background', '');
                     });
+                    //鼠标点击事件
+                    $(element).click(
+                       function () {
+                           //console.log($(this));
+                           var cityName = $(this).html()
+                           var cityId = $(this).attr('city_id');
+                           $('#cityInput').val(cityName);
+                           var fullURL = basic_url + cityId;
+                           displayWeatherReport(fullURL);
+                       }
+                    );
                 });
             }
         }
