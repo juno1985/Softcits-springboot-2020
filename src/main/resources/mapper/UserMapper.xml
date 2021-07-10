@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.softcits.cn.mapper.UserMapper">
+
+  <!--	Integer insert(User u);
+
+	User get(String uname);
+-->
+    <insert id="insert" parameterType="org.softcits.cn.model.User">
+ INSERT INTO user(uname, passwd) VALUES (#{uname}, #{passwd})
+  </insert>
+
+    <!-- City getCityByCityId(String city_id); -->
+    <select id="get" resultType="org.softcits.cn.model.User">
+  	SELECT id, uname, passwd FROM user WHERE uname = #{uname};
+  </select>
+
+
+</mapper>

@@ -28,11 +28,10 @@ function displayWeatherReport(full_url) {
                     setInterval(function () {
                         $('#report_notification').find('ul:first').animate(
                             {marginTop: '-25px'}, 2000,
-                               function(){
-                                   $(this).css({marginTop: '0px'}).find('li:first').appendTo(this);
-                               }
-
-                    )
+                            function () {
+                                $(this).css({marginTop: '0px'}).find('li:first').appendTo(this);
+                            }
+                        )
                     }, 1000);
 
                     // console.log(response);
@@ -82,62 +81,98 @@ function replaceBackground(weather_type, html_dom) {
         html_dom.css('background', 'url(../img/sunny.gif) no-repeat').css('background-size', '100%');
     }
 }
-function ambiguousSearch(obj){
 
-    $(this).keyup(function(event){
+function ambiguousSearch(obj) {
+
+    //游标位置
+    var cursor = 0;
+    $(this).keyup(function (event) {
+
+        // console.log(event.keyCode);
+
         // 空格键
-        if(event.keyCode == 32){
+        if (event.keyCode == 32) {
             //去掉空格
-            var input_value = $('#cityInput').val().replace(' ','');
+            var input_value = $('#cityInput').val().replace(' ', '');
 
             // console.log(input_value);
             //从列表匹配input中输入的汉字
-            $.each($('#cityList').find('div'), function (index, element){
+            $.each($('#cityList').find('div'), function (index, element) {
                 var div_value = element.innerHTML;
                 // console.log(div_value);
-                if(div_value.indexOf(input_value) != -1){
+                if (div_value.indexOf(input_value) != -1) {
                     element.style.display = 'block';
-                }
-                else{
+                } else {
                     element.style.display = 'none';
                 }
-            } );
+            });
+        }
+        // up 键
+        else if (event.keyCode == 38) {
+            if (cursor > 0) {
+                cursor--;
+                console.log(cursor);
+            }
+        }
+        // down 键
+        else if (event.keyCode == 40) {
+            if (cursor < $('#cityList').find('div').size() - 1) {
+                cursor++;
+                console.log(cursor);
+            }
+        }
+        // enter 键
+        else if (event.keyCode == 13) {
+
         }
 
+        $.each($('#cityList').find('div'), function (index, element) {
+            if (index == cursor) {
+                $(element).css('background', '#eee');
+                //调节滚动条偏移
+                //$('#cityList').scrollTop(element.offsetTop);
+                //console.log($(element).scrollTop());
+                // console.log(element.offsetTop);
+            } else {
+                $(element).css('background', '');
+            }
+
+        });
     });
 }
-function initCityList(){
+
+function initCityList() {
 
     $.ajax(
         {
-            url : cities_url,
-            method : 'get',
+            url: cities_url,
+            method: 'get',
             dataType: 'json',
             success: function (arr_city) {
                 var cityList_innerHtml = '';
-                $.each(arr_city, function(index, element){
-                    cityList_innerHtml += '<div id="' + element.id +'" city_id="' + element.city_id +'">'
-                                + element.city_name + '</div>';
+                $.each(arr_city, function (index, element) {
+                    cityList_innerHtml += '<div id="' + element.id + '" city_id="' + element.city_id + '">'
+                        + element.city_name + '</div>';
                 });
 
                 $('#cityList').html(cityList_innerHtml);
 
-                $.each($('#cityList').find('div'), function(index, element){
+                $.each($('#cityList').find('div'), function (index, element) {
                     //鼠标经过高亮
-                    $(element).mouseenter(function(){
+                    $(element).mouseenter(function () {
                         $(this).css('background', '#eee');
                         $(this).siblings().css('background', '');
                     });
                     //鼠标点击事件
                     $(element).click(
-                       function () {
-                           //console.log($(this));
-                           var cityName = $(this).html()
-                           var cityId = $(this).attr('city_id');
-                           $('#cityInput').val(cityName);
-                           var fullURL = basic_url + cityId;
-                           displayWeatherReport(fullURL);
-                       }
+                        function () {
+                            //console.log($(this));
+                            var cityName = $(this).html()
+                            var cityId = $(this).attr('city_id');
+                            $('#cityInput').val(cityName);
+                            var fullURL = basic_url + cityId;
+                            displayWeatherReport(fullURL);
+                        }
                     );
                 });
             }
