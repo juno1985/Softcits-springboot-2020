@@ -95,7 +95,7 @@ CONSTRAINT notice_city_tmp_constraint FOREIGN KEY(cid) REFERENCES city (id)
 CREATE TABLE `user`(
 id INT AUTO_INCREMENT,
 uname VARCHAR(20) UNIQUE,
-passwd VARCHAR(20) UNIQUE,
+passwd VARCHAR(200) UNIQUE,
 PRIMARY KEY(id)
 );
 
