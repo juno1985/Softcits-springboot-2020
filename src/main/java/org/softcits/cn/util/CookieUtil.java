@@ -15,4 +15,12 @@ public class CookieUtil {
         }
         return null;
     }
+
+    public static void setCookie(HttpServletRequest request, HttpServletResponse response, String name, String value){
+        Cookie cookie = new Cookie(name, value);
+        cookie.setMaxAge(60);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
+    }
 }

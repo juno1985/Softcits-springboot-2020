@@ -1,24 +1,24 @@
 package org.softcits.cn.controller;
 
-import org.softcits.cn.model.City;
-import org.softcits.cn.pojo.Response;
-import org.softcits.cn.serivce.CityService;
-import org.softcits.cn.serivce.RemoteDataService;
-import org.softcits.cn.serivce.WeatherResponseService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.softcits.cn.model.City;
+import org.softcits.cn.pojo.Response;
+import org.softcits.cn.serivce.CityService;
+import org.softcits.cn.serivce.RemoteDataService;
+import org.softcits.cn.serivce.UserService;
+import org.softcits.cn.serivce.WeatherResponseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -34,6 +34,9 @@ public class WeatherReportController {
 
 	@Autowired
 	private CityService cityService;
+
+	@Autowired
+	private UserService userService;
 	
 	/**
 	 * http://localhost:8080/report/id/101070101
@@ -79,6 +82,22 @@ public class WeatherReportController {
 	public ResponseEntity<List<City>> getAllCities(){
 		List<City> list = cityService.getAllCities();
 		return new ResponseEntity<List<City>>(list, HttpStatus.OK);
+	}
+
+	@PostMapping("/login")
+	public ResponseEntity<String> login(String user, String password, HttpServletRequest request, HttpServletResponse response){
+		String u = userService.login(user, password, request, response);
+		if(u == null){
+			try {
+				//重新登录
+				response.sendRedirect("/page/login.html");
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return new ResponseEntity<>("Login Failed", HttpStatus.FORBIDDEN);
+		}
+		else return new ResponseEntity<String>("Login Success", HttpStatus.OK);
 	}
 	
 }
