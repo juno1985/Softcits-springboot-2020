@@ -40,4 +40,10 @@ public class AdminController {
 		weatherDataAdmin.cleanWeatherData();
 		return new ResponseEntity<String>("Clean Up Completed.", HttpStatus.OK);
 	}
+
+	@GetMapping("test")
+	public ResponseEntity<String> test(){
+		System.out.println("Enter Admin Contorller Test");
+		return new ResponseEntity<String>("Admin Controller", HttpStatus.OK);
+	}
 }
