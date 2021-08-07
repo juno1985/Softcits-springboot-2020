@@ -12,4 +12,5 @@
 5. Insert Cities from src/main/resources/citilist.json into MYSQL
     a. visit http://localhost:8080/admin/addcities
 6. Run JUNIT function: org.softcits.cn.serivce.RemoteDataServiceTest.initBatchWeatherDataTest
-7. Vist http://localhost:8080/report/main
+7. Add user/123456 by running org.softcits.cn.serivce.UserServiceTest.insertTest
+8. Vist http://localhost:8080/report/main
